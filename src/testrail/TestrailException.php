@@ -1,6 +1,6 @@
 <?php
 
-namespace testrail;
+namespace flexperto\BehatTestrailReporter\testrail;
 
 use Exception;
 

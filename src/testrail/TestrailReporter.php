@@ -1,6 +1,6 @@
 <?php
 
-namespace testrail;
+namespace flexperto\BehatTestrailReporter\testrail;
 
 use Behat\Behat\EventDispatcher\Event\AfterFeatureTested;
 use Behat\Behat\Hook\Scope\AfterScenarioScope;

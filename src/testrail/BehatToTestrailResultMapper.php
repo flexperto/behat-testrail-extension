@@ -1,6 +1,6 @@
 <?php
 
-namespace testrail;
+namespace flexperto\BehatTestrailReporter\testrail;
 
 use Behat\Testwork\Tester\Result\TestResult as BehatTestResult;
 use testrail\TestCase as TestrailTestCase;

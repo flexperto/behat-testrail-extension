@@ -3,7 +3,7 @@
 namespace flexperto\BehatTestrailReporter\testrail;
 
 use Behat\Testwork\Tester\Result\TestResult as BehatTestResult;
-use testrail\TestCase as TestrailTestCase;
+use flexperto\BehatTestrailReporter\testrail\TestCase as TestrailTestCase;
 
 class BehatToTestrailResultMapper
 {

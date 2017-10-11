@@ -33,7 +33,7 @@ class TestrailApiClient
         $response = $request
             ->uri("{$this->baseUrl}/add_results_for_cases/{$this->runId}")
             ->basicAuth($this->username, $this->apiKey)
-            ->body(json_encode([ "results" => $pendingResultsAccumulator], JSON_PRETTY_PRINT), Mime::JSON)
+            ->body(json_encode([ "results" => array_values($pendingResultsAccumulator)], JSON_PRETTY_PRINT), Mime::JSON)
             ->method("POST")
             ->send();
         if ($response->code !== 200) {

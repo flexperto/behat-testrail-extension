@@ -50,7 +50,7 @@ class TestrailReporterExtension implements Extension
      * @inheritdoc
      */
     public function load(ContainerBuilder $container, array $config) {
-        $definition = new Definition("testrail\\TestrailReporter");
+        $definition = new Definition("flexperto\\BehatTestrailReporter\\testrail\\TestrailReporter");
         $definition->addArgument($config['baseUrl']);
         $definition->addArgument($config['username']);
         $definition->addArgument($config['apiKey']);
@@ -58,7 +58,7 @@ class TestrailReporterExtension implements Extension
         $definition->addArgument($config['testidPrefix']);
         $definition->addArgument($config['customFields']);
 
-        $container->setDefinition("testrail.reporter", $definition);
+        $container->setDefinition("testrail.reporter", $definition)->addTag('event_dispatcher.subscriber');
     }
 
 }

@@ -1,5 +1,6 @@
 {
     "name": "flexperto/testrail-reporter",
+    "type": "library",
     "description": "Push behat test execution results to testrail",
     "authors": [
         {

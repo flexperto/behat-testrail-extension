@@ -9,7 +9,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=7.1.0",
+        "php": "^7.0",
         "behat/behat": "~3.0",
         "nategood/httpful": ">=v0.2.20"
     },

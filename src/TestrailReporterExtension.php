@@ -37,13 +37,13 @@ class TestrailReporterExtension implements Extension
      * @inheritdoc
      */
     public function configure(ArrayNodeDefinition $builder) {
-        $builder->children()->scalarNode("baseUrl")->defaultValue("https://flexperto.testrail.net/index.php?/api/v2");
-        $builder->children()->scalarNode("username")->defaultValue("dmytro.grablov@flexperto.com");
-        $builder->children()->scalarNode("apiKey")->defaultValue("f8Urqd4H1qRBYl.pc4Yw-EvfSjDpQ1ktzsDrituTR");
-        $builder->children()->scalarNode("runId")->defaultValue("16");
+        $builder->children()->scalarNode("baseUrl")->defaultNull();
+        $builder->children()->scalarNode("username")->defaultNull();
+        $builder->children()->scalarNode("apiKey")->defaultNull();
+        $builder->children()->scalarNode("runId")->defaultNull();
         $builder->children()->scalarNode("testidPrefix")->defaultValue("test_rail_");
-        $builder->children()->scalarNode("loop_break")->defaultValue("false");
-        $builder->children()->arrayNode('customFields')->defaultValue(['custom_environment' => '1']);
+        $builder->children()->arrayNode("customFields")->prototype("scalar");
+        $builder->children()->booleanNode("enabled")->defaultTrue();
     }
 
     /**

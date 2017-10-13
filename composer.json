@@ -1,7 +1,7 @@
 {
-    "name": "flexperto/testrail-reporter",
+    "name": "flexperto/behat-testrail-reporter",
     "type": "library",
-    "description": "Push behat test execution results to testrail",
+    "description": "Push behat test execution results to Testrail",
     "authors": [
         {
             "name": "Flexperto dev team",

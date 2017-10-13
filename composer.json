@@ -1,6 +1,8 @@
 {
     "name": "flexperto/behat-testrail-reporter",
     "type": "library",
+    "keywords": ["flexperto"],
+    "homepage": "http://flexperto.com/",
     "description": "Push behat test execution results to Testrail",
     "authors": [
         {

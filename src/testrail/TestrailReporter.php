@@ -32,6 +32,9 @@ class TestrailReporter implements EventSubscriberInterface
     /** @var  TestCase[] accumulates test results before they are being sent to Testrail */
     private $pendingResultsAccumulator;
 
+    /** @var  string last error message caught from failing scenario step. Should be cleared explicitly on AfterScenario*/
+    private $lastErrorMessage;
+
     public function __construct(string $baseUrl, string $username, string $apiKey, string $runId, string $testidPrefix, array $customFields)
     {
         $this->testrailApiClient = new TestrailApiClient($baseUrl, $username, $apiKey, $runId);
@@ -61,15 +64,15 @@ class TestrailReporter implements EventSubscriberInterface
     public function onAfterStepTested(AfterStepTested $event) {
         $result = $event->getTestResult();
         if (!$result->isPassed() && $result instanceof ExceptionResult) {
-            //TODO do something to push this exception to scenario result
-            echo $result->getException()->getMessage();
+            $this->lastErrorMessage = $result->getException()->getMessage();
         }
     }
 
     public function onAfterScenarioTested(AfterScenarioTested $event) {
         if ($this->isScenarioApplicable($event)) {
-            $this->scenarioFinished($event);
+            $this->scenarioFinished($event, $this->lastErrorMessage);
         }
+        $this->lastErrorMessage = null;
     }
 
     public function onAfterFeatureTested(AfterFeatureTested $event) {

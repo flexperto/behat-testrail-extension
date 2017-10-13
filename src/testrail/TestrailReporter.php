@@ -44,14 +44,14 @@ class TestrailReporter implements EventSubscriberInterface
     }
 
     public static function getSubscribedEvents() {
-        return array(
+        return [
             'tester.feature_tested.after' => 'onAfterFeatureTested',
             'tester.scenario_tested.before' => 'onBeforeScenarioTested',
             'tester.scenario_tested.after' => 'onAfterScenarioTested',
             'tester.example_tested.before' => 'onBeforeScenarioTested',
             'tester.example_tested.after' => 'onAfterScenarioTested',
             'tester.step_tested.after' => 'onAfterStepTested',
-        );
+        ];
     }
 
 

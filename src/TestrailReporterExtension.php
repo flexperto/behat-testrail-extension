@@ -50,15 +50,23 @@ class TestrailReporterExtension implements Extension
      * @inheritdoc
      */
     public function load(ContainerBuilder $container, array $config) {
-        $definition = new Definition("flexperto\\BehatTestrailReporter\\testrail\\TestrailReporter");
-        $definition->addArgument($config['baseUrl']);
-        $definition->addArgument($config['username']);
-        $definition->addArgument($config['apiKey']);
-        $definition->addArgument($config['runId']);
-        $definition->addArgument($config['testidPrefix']);
-        $definition->addArgument($config['customFields']);
+        if (
+            $config['enabled'] &&
+            $config['baseUrl'] !== NULL &&
+            $config['username'] !== NULL &&
+            $config['apiKey'] !== NULL &&
+            $config['runId'] !== NULL
+        ) {
+            $definition = new Definition("flexperto\\BehatTestrailReporter\\testrail\\TestrailReporter");
+            $definition->addArgument($config['baseUrl']);
+            $definition->addArgument($config['username']);
+            $definition->addArgument($config['apiKey']);
+            $definition->addArgument($config['runId']);
+            $definition->addArgument($config['testidPrefix']);
+            $definition->addArgument($config['customFields']);
 
-        $container->setDefinition("testrail.reporter", $definition)->addTag('event_dispatcher.subscriber');
+            $container->setDefinition("testrail.reporter", $definition)->addTag('event_dispatcher.subscriber');
+        }
     }
 
 }

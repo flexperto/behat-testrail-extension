@@ -3,17 +3,11 @@
 namespace flexperto\BehatTestrailReporter\testrail;
 
 use Behat\Behat\EventDispatcher\Event\AfterFeatureTested;
-use Behat\Behat\EventDispatcher\Event\AfterOutlineTested;
 use Behat\Behat\EventDispatcher\Event\AfterScenarioTested;
 use Behat\Behat\EventDispatcher\Event\AfterStepTested;
-use Behat\Behat\EventDispatcher\Event\BeforeOutlineTested;
 use Behat\Behat\EventDispatcher\Event\BeforeScenarioTested;
 use Behat\Behat\EventDispatcher\Event\ScenarioTested;
-use Behat\Behat\Hook\Call\AfterScenario;
-use Behat\Behat\Hook\Scope\AfterScenarioScope;
-use Behat\Behat\Hook\Scope\ScenarioScope;
 use Behat\Gherkin\Node\ExampleNode;
-use Behat\Testwork\Output\Formatter;
 use Behat\Testwork\Tester\Result\ExceptionResult;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

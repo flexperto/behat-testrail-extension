@@ -49,13 +49,13 @@ If this is a drop-down list, than entry id is required as a value
 @test_rail_99
 Scenario: simple test
   Given user has 3 apples
-  When user gives 1 apple to his firend
+  When user gives 1 apple to his friend
   Then user has only 2 apples
   
 @test_rail_101
 Scenario Outline: extended test
   Given user has <was> apples
-  When user gives 1 apple to his firend
+  When user gives 1 apple to his friend
   Then user has only <is> apples
   
   Examples:

@@ -1,9 +1,10 @@
 {
     "name": "flexperto/behat-testrail-reporter",
     "type": "library",
-    "keywords": ["flexperto"],
+    "keywords": ["flexperto", "behat", "testrail"],
     "homepage": "http://flexperto.com/",
     "description": "Push behat test execution results to Testrail",
+    "license": "MIT",
     "authors": [
         {
             "name": "Flexperto dev team",

@@ -14,7 +14,7 @@ When enabled and configured, will send API requests to testrail instance and upd
 
 1. Install it
     ```bash
-    $ composer require flexperto/testrail-reporter
+    $ composer require flexperto/behat-testrail-reporter
     ```
 
 2. Enable and configure context service extension in your Behat configuration:

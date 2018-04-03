@@ -87,26 +87,30 @@ class TestrailReporter implements EventSubscriberInterface
 
     private function scenarioStarted(ScenarioTested $scenarioTestedEvent)
     {
-        $scenarioTestCaseId = $this->extractScenarioTestCaseId($scenarioTestedEvent);
-        if (array_key_exists($scenarioTestCaseId, $this->pendingResultsAccumulator)) {
-            $this->pendingResultsAccumulator[$scenarioTestCaseId]->caseRestarted();
-        } else {
-            $newTestCase = new TestCase($scenarioTestCaseId, $this->customFields);
-            $newTestCase->caseStarted();
-            $this->pendingResultsAccumulator[$scenarioTestCaseId] = $newTestCase;
+        $scenarioTestCaseIds = $this->extractScenarioTestCaseIds($scenarioTestedEvent);
+        foreach ($scenarioTestCaseIds as $scenarioTestCaseId) {
+            if (array_key_exists($scenarioTestCaseId, $this->pendingResultsAccumulator)) {
+                $this->pendingResultsAccumulator[$scenarioTestCaseId]->caseRestarted();
+            } else {
+                $newTestCase = new TestCase($scenarioTestCaseId, $this->customFields);
+                $newTestCase->caseStarted();
+                $this->pendingResultsAccumulator[$scenarioTestCaseId] = $newTestCase;
+            }
         }
     }
 
     private function scenarioFinished(AfterScenarioTested $afterScenarioTestedEvent, string $additionalComments = null)
     {
-        $scenarioTestCaseId = $this->extractScenarioTestCaseId($afterScenarioTestedEvent);
-        if (!array_key_exists($scenarioTestCaseId, $this->pendingResultsAccumulator)) {
-            throw new TestrailException("could not find case with id {$scenarioTestCaseId} to fulfil results");
-        }
-        $result = BehatToTestrailResultMapper::getTestrailStatus($afterScenarioTestedEvent->getTestResult()->getResultCode());
-        $testComment = $this->createTestComment($afterScenarioTestedEvent, $additionalComments);
+        $scenarioTestCaseIds = $this->extractScenarioTestCaseIds($afterScenarioTestedEvent);
+        foreach ($scenarioTestCaseIds as $scenarioTestCaseId) {
+            if (!array_key_exists($scenarioTestCaseId, $this->pendingResultsAccumulator)) {
+                throw new TestrailException("could not find case with id {$scenarioTestCaseId} to fulfil results");
+            }
+            $result = BehatToTestrailResultMapper::getTestrailStatus($afterScenarioTestedEvent->getTestResult()->getResultCode());
+            $testComment = $this->createTestComment($afterScenarioTestedEvent, $additionalComments);
 
-        $this->pendingResultsAccumulator[$scenarioTestCaseId]->caseFinished($result, $testComment);
+            $this->pendingResultsAccumulator[$scenarioTestCaseId]->caseFinished($result, $testComment);
+        }
     }
 
     private function featureFinished()
@@ -117,17 +121,21 @@ class TestrailReporter implements EventSubscriberInterface
         $this->pendingResultsAccumulator = [];
     }
 
-    private function extractScenarioTestCaseId(ScenarioTested $scenarioTestedEvent) : int
+    private function extractScenarioTestCaseIds(ScenarioTested $scenarioTestedEvent) : array
     {
+        $ids = [];
         foreach ($scenarioTestedEvent->getScenario()->getTags() as $tag) {
             if (preg_match("/{$this->testIdPrefix}(\\d+)/s", $tag, $matches) !== 0) {
                 $testCaseId = $matches[1];
                 if (is_numeric($testCaseId)) {
-                    return (int)$testCaseId;
+                    $ids[] = (int)$testCaseId;
                 }
             }
         }
-        throw new TestrailException("could not fetch scenario id from " . implode($scenarioTestedEvent->getScenario()->getTags(), ", "));
+        if (empty($ids)) {
+            throw new TestrailException("could not fetch scenario id from " . implode($scenarioTestedEvent->getScenario()->getTags(), ", "));
+        }
+        return $ids;
     }
 
     private function createTestComment(AfterScenarioTested $afterScenarioTestedEvent, string $additionalComments = null) : TestComment

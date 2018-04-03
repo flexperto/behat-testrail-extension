@@ -12,7 +12,7 @@ When enabled and configured, will send API requests to testrail instance and upd
 
 ## Usage
 
-1. Install it
+1. Install it:
     ```bash
     $ composer require flexperto/behat-testrail-reporter
     ```
@@ -43,7 +43,7 @@ If `testidPrefix` is not set, the default will be `test_rail_`
 The key in this case is the testrail system property name (not the display one). As well value might depend on the property type. 
 If this is a drop-down list, than entry id is required as a value
 
-3. Mark your scenarios with annotations that consist of `testidPrefix` and _test case id_ from Testrail
+3. Mark your scenarios with annotations that consist of `testidPrefix` and _test case id_ from Testrail. You can use one or multiple test case id's:
 
 ```
 @test_rail_99
@@ -53,6 +53,7 @@ Scenario: simple test
   Then user has only 2 apples
   
 @test_rail_101
+@test_rail_102
 Scenario Outline: extended test
   Given user has <was> apples
   When user gives 1 apple to his friend
